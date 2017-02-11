@@ -168,7 +168,7 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
    Option                                 Action
    ---------------------------------------------------------------------------------------------
    IP assignmentIP assignment             Select how to allocate the IP address of the appliance.
-                                          - Static
+                                           - static
                                              The wizard prompts you to enter the IP address and 
                                              network settings.
    ---------------------------------------------------------------------------------------------
