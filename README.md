@@ -119,69 +119,98 @@ When you have access to the direct console, you can optionally configure a stati
 
 4. Enter the IP address, subnet mask, and default gateway and press Enter.
 
+## Deploying the vCenter Server Appliance and Platform Services Controller Appliance
 
 The vCenter Server Appliance installer contains executable files for GUI and CLI deployments, which you can use alternatively.
 - The GUI deployment is a two stage process. The first stage is a deployment wizard that deploys the OVA file of the appliance on the target ESXi host or vCenter Server instance. After the OVA deployment finishes, you are redirected to the second stage of the process that sets up and starts the services of the newly deployed appliance.
 
+### Deploy the vCenter Server Appliance with an Embedded Platform Services Controller by Using the GUI
+#### Stage 1 - Deploy the OVA File as a vCenter Server Appliance with an Embedded Platform Services Controller
+1. In the vCenter Server Appliance installer, navigate to the `vcsa-ui-installer` directory, go to the subdirectory for your operating system, and run the installer executable file.
+   - For Windows OS, go to the `win32` subdirectory, and run the `installer.exe` file.
+   - For Linux OS, go to the `lin64` subdirectory, and run the `installer` file.
+2. On the Home page, click `Install` to start the deployment wizard.
+3. Review the Introduction page to understand the deployment process and click `Next`.
+4. Read and accept the license agreement, and click `Next`.
+5. On the Select a deployment type page, select `Platform Services Controller` and click `Next`.
+6. Connect to the target server on which you want to deploy the Platform Services Controller appliance and click `Next`.
+   ```
+   ---------------------------------------------------------------------------------------------
+   Option                                 Steps
+   ---------------------------------------------------------------------------------------------
+   You can connect to an ESXi host on     1. Enter the FQDN or IP address of the ESXi host.
+   which to deploy the appliance.         2. Enter the HTTPS port of the ESXi host.
+                                          3. Enter the user name and password of a user with 
+                                             administrative privileges on the ESXi host, for
+                                             example, the root user.
+                                          4. Click Next.
+                                          5. Verify that the certificate warning displays the 
+                                             SHA1 thumbprint of the SSL certificate that is 
+                                             installed on the target ESXi host, and click Yes 
+                                             to accept the certificate thumbprint.
+   ---------------------------------------------------------------------------------------------
+   You can connect to a vCenter Server 
+   instance and browse the inventory 
+   to select an ESXi host or DRS 
+   cluster on which to deploy the 
+   appliance.
+   ---------------------------------------------------------------------------------------------
+   ```
+7. On the Set up appliance VM page, enter a name for the Platform Services Controller appliance, set the password for the root user, and click `Next`.
+8. Select the deployment size for the vCenter Server Appliance for your vSphere inventory.
+9. Select the storage size for the vCenter Server Appliance, and click `Next`.
+10. From the list of available datastores, select the location where all the virtual machine configuration files and virtual disks will be stored.
+11. On the Configure network settings page, set up the network settings.
+   The IP address or the FQDN of the appliance is used as a system name. It is recommended to use an FQDN. However, if you want to use an IP address, use static IP address allocation for the appliance, because IP addresses allocated by DHCP might change.
 
-vCenter Server with an Embedded Platform Services Controller
-
-
-In the vCenter Server Appliance installer, navigate to the `vcsa-ui-installer` directory, go to the subdirectory for your operating system, and run the installer executable file.
-- For Windows OS, go to the `win32` subdirectory, and run the `installer.exe` file.
-- For Linux OS, go to the `lin64` subdirectory, and run the `installer` file.
-- On the Home page, click `Install` to start the deployment wizard.
-- Review the Introduction page to understand the deployment process and click `Next`.
-- Read and accept the license agreement, and click `Next`.
-- On the Select a deployment type page, select `Platform Services Controller` and click `Next`.
-- Connect to the target server on which you want to deploy the Platform Services Controller appliance and click `Next`.
-```
-Option:
-You can connect to an ESXi host on which to deploy the appliance.
-Steps:
-Enter the FQDN or IP address of the ESXi host.
-Enter the HTTPS port of the ESXi host.
-Enter the user name and password of a user with administrative privileges on the ESXi host, for example, the root user.
-Click Next.
-Verify that the certificate warning displays the SHA1 thumbprint of the SSL certificate that is installed on the target ESXi host, and click Yes to accept the certificate thumbprint.
-
-Option:
-You can connect to a vCenter Server instance and browse the inventory to select an ESXi host or DRS cluster on which to deploy the appliance.
-```
-
-- On the Set up appliance VM page, enter a name for the Platform Services Controller appliance, set the password for the root user, and click Next.
-- From the list of available datastores, select the location where all the virtual machine configuration files and virtual disks will be stored.
+   ```
+   ---------------------------------------------------------------------------------------------
+   Option                                 Action
+   ---------------------------------------------------------------------------------------------
+   IP assignmentIP assignment             Select how to allocate the IP address of the appliance.
+                                          - Static
+                                             The wizard prompts you to enter the IP address and 
+                                             network settings.
+   ---------------------------------------------------------------------------------------------
+   ```
 
 - On the Configure network settings page, set up the network settings.
   The IP address or the FQDN of the appliance is used as a system name. It is recommended to use an FQDN. However, if you want to use an IP address, use static IP address allocation for the appliance because IP addresses allocated by DHCP might change.
 
 
-- On the Ready to complete stage 1 page, review the deployment settings for the Platform Services Controller appliance and click Finish to start the OVA deployment process.
-- Wait for the OVA deployment to finish, and click Continue to proceed with stage 2 of the deployment process to set up and start the services of the newly deployed appliance.
+13. On the Ready to complete stage 1 page, review the deployment settings for the Platform Services Controller appliance and click `Finish` to start the OVA deployment process.
+14. Wait for the OVA deployment to finish, and click `Continue` to proceed with stage 2 of the deployment process to set up and start the services of the newly deployed appliance.
 
+#### Stage 2 - Set up the Newly Deployed vCenter Server Appliance with an Embedded Platform Services Controller
+1. Review the introduction to stage 2 of the deployment process and click `Next`.
 
-- Review the introduction to stage 2 of the deployment process and click `Next`.
+2. Configure the time settings in the appliance, optionally enable remote SSH access to the appliance, and click `Next`.
+   ```
+   ---------------------------------------------------------------------------------------------
+   Option                                 Description
+   ---------------------------------------------------------------------------------------------
+   Synchronize time with the ESXi host    Enables periodic time synchronization, and VMware 
+                                          Tools sets the time of the guest operating system to 
+                                          be the same as the time of the ESXi host.
+   ---------------------------------------------------------------------------------------------
+   ```
 
-- Configure the time settings in the appliance, optionally enable remote SSH access to the appliance, and click `Next`.
-```
-Synchronize time with the ESXi host
+3. On the SSO configuration page, create the vCenter Single Sign-On domain, and click Next.
+   3.1 Enter the domain name, for example, `vsphere.local`
+   
+   3.2 Set the password for the vCenter Single Sign-On administrator account.
+       This is the password for the user administrator@your_domain_name.
+       After the deployment, you can log in to vCenter Single Sign-On and to vCenter Server as administrator@your_domain_name.
+   
+   3.3 Enter the site name for vCenter Single Sign-On
 
-Enables periodic time synchronization, and VMware Tools sets the time of the guest operating system to be the same as the time of the ESXi host.
-```
-- On the SSO configuration page, create the vCenter Single Sign-On domain, and click Next.
-a. Enter the domain name, for example, vsphere.local
-b. Set the password for the vCenter Single Sign-On administrator account. This is the password for the user administrator@your_domain_name. After the deployment, you can log in to vCenter Single Sign-On and to vCenter Server as administrator@your_domain_name.
-c. Enter the site name for vCenter Single Sign-On.
-The site name is important if you are using vCenter Single Sign-On in
-multiple locations.
+4. Review the VMware Customer Experience Improvement Program (CEIP) page and choose if you want to join the program.
 
-- Review the VMware Customer Experience Improvement Program (CEIP) page and choose if you want to join the program.
+5. On the Ready to complete page, review the configuration settings for the vCenter Server Appliance, click `Finish`, and click `OK` to complete stage 2 of the deployment process and set up the appliance.
 
-- On the Ready to complete page, review the configuration settings for the vCenter Server Appliance, click Finish, and click OK to complete stage 2 of the deployment process and set up the appliance.
+6. (Optional) After the initial setup finishes, click the https://vcenter_server_appliance_fqdn/vsphere-client to go to the vSphere Web Client and log in to the vCenter Server instance in the vCenter Server Appliance, or click the https://vcenter_server_appliance_fqdn:443 to go the vCenter Server Appliance Getting Started page.
 
-- (Optional) After the initial setup finishes, click the https://vcenter_server_appliance_fqdn/vsphere-client to go to the vSphere Web Client and log in to the vCenter Server instance in the vCenter Server Appliance, or click the https://vcenter_server_appliance_fqdn:443 to go the vCenter Server Appliance Getting Started page.
-
-- Click Close to exit the wizard.
+7. Click `Close` to exit the wizard.
 
 You are redirected to the vCenter Server Appliance Getting Started page.
 
@@ -200,9 +229,13 @@ You are redirected to the vCenter Server Appliance Getting Started page.
 4. Based on your plan for the resources and networking architecture of the cluster, use the vSphere Web Client to add hosts to the cluster.
 
 5. Browse to the cluster and enable vSphere HA.
+   
    a. Click the `Configure` tab.
+   
    b. Select `vSphere Availability` and click `Edit`.	
+   
    c. Select `Turn ON vSphere HA`.
+   
    d. Select `Turn ON Proactive HA` to allow proactive migrations of VMs from hosts on which a provider has notified a health degradation.
 
 6. Under `Failures and Responses` select `Enable Host Monitoring`
