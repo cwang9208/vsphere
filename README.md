@@ -65,7 +65,6 @@
    ```
    mkdir /usbdisk
    mount /dev/sdb1 /usbdisk
-   
    ```
 6. Create a destination directory and mount the ESXi installer ISO image to it.
    ```
@@ -135,28 +134,11 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 5. On the Select a deployment type page, select `Platform Services Controller` and click `Next`.
 6. Connect to the target server on which you want to deploy the Platform Services Controller appliance and click `Next`.
 
-   ```
-   ---------------------------------------------------------------------------------------------
-   Option                                 Steps
-   ---------------------------------------------------------------------------------------------
-   You can connect to an ESXi host on     1. Enter the FQDN or IP address of the ESXi host.
-   which to deploy the appliance.         2. Enter the HTTPS port of the ESXi host.
-                                           3. Enter the user name and password of a user with 
-                                              administrative privileges on the ESXi host, for
-                                              example, the root user.
-                                           4. Click Next.
-                                           5. Verify that the certificate warning displays the 
-                                              SHA1 thumbprint of the SSL certificate that is 
-                                              installed on the target ESXi host, and click Yes 
-                                              to accept the certificate thumbprint.
-   ---------------------------------------------------------------------------------------------
-   You can connect to a vCenter Server 
-   instance and browse the inventory 
-   to select an ESXi host or DRS 
-   cluster on which to deploy the 
-   appliance.
-   ---------------------------------------------------------------------------------------------
-   ```
+   Option | Steps
+   ------------ | -------------
+   You can connect to an ESXi host on which to deploy the appliance | 1. Enter the FQDN or IP address of the ESXi host. <br/> 2. Enter the HTTPS port of the ESXi host. <br/> 3. Enter the user name and password of a user with administrative privileges on the ESXi host, for example, the root user. <br/> 4. Click Next. <br/> 5. Verify that the certificate warning displays the SHA1 thumbprint of the SSL certificate that is installed on the target ESXi host, and click Yes to accept the certificate thumbprint.
+   You can connect to a vCenter Server instance and browse the inventory to select an ESXi host or DRS cluster on which to deploy the appliance. | 
+
 
 7. On the Set up appliance VM page, enter a name for the Platform Services Controller appliance, set the password for the root user, and click `Next`.
 8. Select the deployment size for the vCenter Server Appliance for your vSphere inventory.
@@ -165,21 +147,11 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 11. On the Configure network settings page, set up the network settings.
    The IP address or the FQDN of the appliance is used as a system name. It is recommended to use an FQDN. However, if you want to use an IP address, use static IP address allocation for the appliance, because IP addresses allocated by DHCP might change.
 
-   ```
-   ---------------------------------------------------------------------------------------------
-   Option                                 Action
-   ---------------------------------------------------------------------------------------------
-   IP assignmentIP assignment             Select how to allocate the IP address of the appliance.
-                                           - static
-                                             The wizard prompts you to enter the IP address and 
-                                             network settings.
-   ---------------------------------------------------------------------------------------------
-   ```
+   Option | Action
+   ------------ | -------------
+   IP assignment | Select how to allocate the IP address of the appliance. <br/> - static <br/> &nbsp; The wizard prompts you to enter the IP address and network settings.
 
-- On the Configure network settings page, set up the network settings.
-  The IP address or the FQDN of the appliance is used as a system name. It is recommended to use an FQDN. However, if you want to use an IP address, use static IP address allocation for the appliance because IP addresses allocated by DHCP might change.
-
-
+12. On the Ready to complete stage 1 page, review the deployment settings for the vCenter Server Appliance and click `Finish` to start the OVA deployment process.
 13. On the Ready to complete stage 1 page, review the deployment settings for the Platform Services Controller appliance and click `Finish` to start the OVA deployment process.
 14. Wait for the OVA deployment to finish, and click `Continue` to proceed with stage 2 of the deployment process to set up and start the services of the newly deployed appliance.
 
@@ -187,15 +159,10 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 1. Review the introduction to stage 2 of the deployment process and click `Next`.
 
 2. Configure the time settings in the appliance, optionally enable remote SSH access to the appliance, and click `Next`.
-   ```
-   ---------------------------------------------------------------------------------------------
-   Option                                 Description
-   ---------------------------------------------------------------------------------------------
-   Synchronize time with the ESXi host    Enables periodic time synchronization, and VMware
-                                           Tools sets the time of the guest operating system to
-                                           be the same as the time of the ESXi host.
-   ---------------------------------------------------------------------------------------------
-   ```
+
+   Option | Description
+   ---------------------------------------------------------------------------------------- | -----------------------------------------------------------------------------------------
+   Synchronize time with the ESXi host | Enables periodic time synchronization, and VMware Tools sets the time of the guest operating system to be the same as the time of the ESXi host.
 
 3. On the SSO configuration page, create the vCenter Single Sign-On domain, and click Next.
    
