@@ -2,9 +2,9 @@
 
 ## Installing and Setting Up ESXi
 
-### Installing ESXi
-
-Format a USB Flash Drive to Boot the ESXi Installation or Upgrade
+### Preparing for Installing ESXi
+#### Media Options for Booting the ESXi Installer
+##### Format a USB Flash Drive to Boot the ESXi Installation or Upgrade
 
 1. If your USB flash drive is not detected as /dev/sdb, or you are not sure how your USB flash drive is detected, determine how it is detected.
    
@@ -96,13 +96,10 @@ Format a USB Flash Drive to Boot the ESXi Installation or Upgrade
 
 The USB flash drive can boot the ESXi installer.
 
-Choose Network Adapters for the Management Network
-
-
-Configuring Network Settings
+### Setting Up ESXi
+#### Configuring Network Settings
 ESXi requires one IP address for the management network.
-
-Configuring Network Settings
+##### Choose Network Adapters for the Management Network
 
 1. From the direct console, select `Configure Management Network` and press Enter.
 
@@ -110,15 +107,15 @@ Configuring Network Settings
 
 3. Select a network adapter and press Enter.
 
-Configuring IP Settings for ESXi
+#### Configuring IP Settings for ESXi
 
 When you have access to the direct console, you can optionally configure a static network address.
+##### Configure IP Settings from the Direct Console
+1. Select `Configure Management Network` and press Enter.
 
-1. Select Configure Management Network and press Enter.
+2. Select `IP Configuration` and press Enter.
 
-2. Select IP Configuration and press Enter.
-
-3. Select Set static IP address and network configuration.
+3. Select `Set static IP address and network configuration`.
 
 4. Enter the IP address, subnet mask, and default gateway and press Enter.
 
