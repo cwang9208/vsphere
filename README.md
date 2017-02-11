@@ -224,6 +224,7 @@ You are redirected to the vCenter Server Appliance Getting Started page.
 You must meet the following cluster requirements before you use Fault Tolerance.
 - Fault Tolerance logging and VMotion networking configured.
 - vSphere HA cluster created and enabled. vSphere HA must be enabled before you can power on fault tolerant virtual machines or add a host to a cluster that already supports fault tolerant virtual machines.
+
 #### Configure Networking for Host Machines
 On each host that you want to add to a vSphere HA cluster, you must configure two different networking switches (vMotion and FT logging) so that the host can support vSphere Fault Tolerance.
 
