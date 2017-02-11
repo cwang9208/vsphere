@@ -189,9 +189,9 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
    ---------------------------------------------------------------------------------------------
    Option                                 Description
    ---------------------------------------------------------------------------------------------
-   Synchronize time with the ESXi host    Enables periodic time synchronization, and VMware 
-                                          Tools sets the time of the guest operating system to 
-                                          be the same as the time of the ESXi host.
+   Synchronize time with the ESXi host    Enables periodic time synchronization, and VMware
+                                           Tools sets the time of the guest operating system to
+                                           be the same as the time of the ESXi host.
    ---------------------------------------------------------------------------------------------
    ```
 
