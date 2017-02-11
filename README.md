@@ -139,7 +139,6 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
    You can connect to an ESXi host on which to deploy the appliance | 1. Enter the FQDN or IP address of the ESXi host. <br/> 2. Enter the HTTPS port of the ESXi host. <br/> 3. Enter the user name and password of a user with administrative privileges on the ESXi host, for example, the root user. <br/> 4. Click Next. <br/> 5. Verify that the certificate warning displays the SHA1 thumbprint of the SSL certificate that is installed on the target ESXi host, and click Yes to accept the certificate thumbprint.
    You can connect to a vCenter Server instance and browse the inventory to select an ESXi host or DRS cluster on which to deploy the appliance. | 
 
-
 7. On the Set up appliance VM page, enter a name for the Platform Services Controller appliance, set the password for the root user, and click `Next`.
 8. Select the deployment size for the vCenter Server Appliance for your vSphere inventory.
 9. Select the storage size for the vCenter Server Appliance, and click `Next`.
