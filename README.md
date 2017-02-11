@@ -31,7 +31,7 @@
    
    2.2 Enter `n` to create a primary partition 1 that extends over the entire disk.
    
-   2.3 Enter `t` to set the type to an appropriate setting for the FAT32 file system, such as c.
+   2.3 Enter `t` to set the type to an appropriate setting for the FAT32 file system, such as `c`.
    
    2.4 Enter `a` to set the active flag on partition 1.
    
@@ -134,20 +134,21 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 4. Read and accept the license agreement, and click `Next`.
 5. On the Select a deployment type page, select `Platform Services Controller` and click `Next`.
 6. Connect to the target server on which you want to deploy the Platform Services Controller appliance and click `Next`.
+
    ```
    ---------------------------------------------------------------------------------------------
    Option                                 Steps
    ---------------------------------------------------------------------------------------------
    You can connect to an ESXi host on     1. Enter the FQDN or IP address of the ESXi host.
    which to deploy the appliance.         2. Enter the HTTPS port of the ESXi host.
-                                          3. Enter the user name and password of a user with 
-                                             administrative privileges on the ESXi host, for
-                                             example, the root user.
-                                          4. Click Next.
-                                          5. Verify that the certificate warning displays the 
-                                             SHA1 thumbprint of the SSL certificate that is 
-                                             installed on the target ESXi host, and click Yes 
-                                             to accept the certificate thumbprint.
+                                           3. Enter the user name and password of a user with 
+                                              administrative privileges on the ESXi host, for
+                                              example, the root user.
+                                           4. Click Next.
+                                           5. Verify that the certificate warning displays the 
+                                              SHA1 thumbprint of the SSL certificate that is 
+                                              installed on the target ESXi host, and click Yes 
+                                              to accept the certificate thumbprint.
    ---------------------------------------------------------------------------------------------
    You can connect to a vCenter Server 
    instance and browse the inventory 
@@ -156,6 +157,7 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
    appliance.
    ---------------------------------------------------------------------------------------------
    ```
+
 7. On the Set up appliance VM page, enter a name for the Platform Services Controller appliance, set the password for the root user, and click `Next`.
 8. Select the deployment size for the vCenter Server Appliance for your vSphere inventory.
 9. Select the storage size for the vCenter Server Appliance, and click `Next`.
