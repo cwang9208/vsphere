@@ -198,10 +198,13 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
    ```
 
 3. On the SSO configuration page, create the vCenter Single Sign-On domain, and click Next.
+   
    3.1 Enter the domain name, for example, `vsphere.local`
    
    3.2 Set the password for the vCenter Single Sign-On administrator account.
+       
        This is the password for the user administrator@your_domain_name.
+       
        After the deployment, you can log in to vCenter Single Sign-On and to vCenter Server as administrator@your_domain_name.
    
    3.3 Enter the site name for vCenter Single Sign-On
