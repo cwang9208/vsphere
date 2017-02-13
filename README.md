@@ -6,94 +6,7 @@
 #### Media Options for Booting the ESXi Installer
 ##### Format a USB Flash Drive to Boot the ESXi Installation or Upgrade
 
-1. If your USB flash drive is not detected as /dev/sdb, or you are not sure how your USB flash drive is detected, determine how it is detected.
-   
-   1.1 at the command line, run the command for displaying the current log messages.
-   
-   ```tail -f /var/log/messages```
-
-   1.2 Plug in your USB flash drive.
-
-   You see several messages that identify the USB flash drive in a format similar to the following message.
-   
-   ```
-   Oct 25 13:25:23 ubuntu kernel: [  712.447080] sd 3:0:0:0: [sdb] Attached SCSI removable disk
-   ```
-   
-   In this example, `sdb` identifies the USB device. If your device is identified differently, use that identification, in place of `sdb`.
-
-2. Create a partition table on the USB flash device.
-   ```
-   /sbin/fdisk /dev/sdb
-
-   ```
-   2.1 Enter `d` to delete partitions until they are all deleted.
-   
-   2.2 Enter `n` to create a primary partition 1 that extends over the entire disk.
-   
-   2.3 Enter `t` to set the type to an appropriate setting for the FAT32 file system, such as `c`.
-   
-   2.4 Enter `a` to set the active flag on partition 1.
-   
-   2.5 Enter `p` to print the partition table.
-
-   The result should be similar to the following message.
-   
-   ```
-   Disk /dev/sdb: 2004 MB, 2004877312 bytes
-   255 heads, 63 sectors/track, 243 cylinders
-   Units = cylinders of 16065 * 512 = 8225280 bytes
-      Device Boot      Start         End      Blocks   Id  System
-   /dev/sdb1             1           243      1951866  c   W95 FAT32 (LBA)
-   ```
-
-   2.6 Enter `w` to write the partition table and exit the program.
-
-3. Format the USB flash drive with the Fat32 file system.
-
-   ```
-   /sbin/mkfs.vfat -F 32 -n USB /dev/sdb1
-   ```
-
-4. Install the Syslinux bootloader on the USB flash drive.
-   ```
-   /usr/bin/syslinux /dev/sdb1
-   cat /usr/lib/syslinux/mbr/mbr.bin > /dev/sdb
-   ```
-
-5. Create a destination directory and mount the USB flash drive to it.
-   ```
-   mkdir /usbdisk
-   mount /dev/sdb1 /usbdisk
-   ```
-6. Create a destination directory and mount the ESXi installer ISO image to it.
-   ```
-   mkdir /esxi_cdrom
-   mount -o loop VMware-VMvisor-Installer-6.x.x-XXXXXX.x86_64.iso /esxi_cdrom
-   ```
-
-7. Copy the contents of the ISO image to the USB flash drive.
-   ```
-   cp -r /esxi_cdrom/* /usbdisk
-   ```
-
-8. Rename the `isolinux.cfg` file to `syslinux.cfg`.
-   ```
-   mv /usbdisk/isolinux.cfg /usbdisk/syslinux.cfg
-   ```
-9. In the `/usbdisk/syslinux.cfg` file, edit the `APPEND -c boot.cfg` line to `APPEND -c boot.cfg -p 1`.
-
-10. Unmount the USB flash drive.
-   ```
-   umount /usbdisk
-   ```
-
-11. Unmount the installer ISO image.
-   ```
-   umount /esxi_cdrom
-   ```
-
-The USB flash drive can boot the ESXi installer.
+https://rufus.akeo.ie/
 
 ### Setting Up ESXi
 #### Configuring Network Settings
@@ -126,7 +39,6 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 ### Deploy the vCenter Server Appliance with an Embedded Platform Services Controller by Using the GUI
 #### Stage 1 - Deploy the OVA File as a vCenter Server Appliance with an Embedded Platform Services Controller
 1. In the vCenter Server Appliance installer, navigate to the `vcsa-ui-installer` directory, go to the subdirectory for your operating system, and run the installer executable file.
-   - For Windows OS, go to the `win32` subdirectory, and run the `installer.exe` file.
    - For Linux OS, go to the `lin64` subdirectory, and run the `installer` file.
 2. On the Home page, click `Install` to start the deployment wizard.
 3. Review the Introduction page to understand the deployment process and click `Next`.
@@ -157,7 +69,7 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 #### Stage 2 - Set up the Newly Deployed vCenter Server Appliance with an Embedded Platform Services Controller
 1. Review the introduction to stage 2 of the deployment process and click `Next`.
 
-2. Configure the time settings in the appliance, optionally enable remote SSH access to the appliance, and click `Next`.
+2. Configure the time settings in the appliance. For vCenter Server High Availability (HA), enable SSH access.
 
    Option | Description
    ---------------------------------------------------------------------------------------- | -----------------------------------------------------------------------------------------
@@ -184,6 +96,61 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 7. Click `Close` to exit the wizard.
 
 You are redirected to the vCenter Server Appliance Getting Started page.
+
+# vSphere Storage
+## Creating Datastores
+### Create an NFS Datastore
+1. In the vSphere Web Client navigator, select `Global Inventory Lists > Datastores`.
+
+2. Click the `New Datastore` icon.
+
+3. Type the datastore name and if necessary, select the placement location for the datastore.
+
+4. Select NFS as the datastore type.
+
+5. Specify an NFS version.
+
+6. Type the server name or IP address and the mount point folder name.
+
+7. Select `Mount NFS read only` if the volume is exported as read-only by the NFS server.
+
+8. If you are creating a datastore at the data center or cluster level, select hosts that mount the datastore.
+
+9. Review the configuration options and click `Finish`.
+
+# vSphere Networking
+## Setting Up Networking with vSphere Standard Switches
+### Create a vSphere Standard Switch
+
+1. In the vSphere Web Client, navigate to the host.
+
+2. On the `Configure` tab, expand `Networking` and select `Virtual switches`.
+
+3. Click `Add host networking`.
+
+4. Select a connection type for which you want to use the new standard switch and click `Next`.
+
+   Option | Description
+   ------------ | -------------
+   VMkernel Network Adapter | Create a new VMkernel adapter to handle host management traffic, vMotion, network storage, fault tolerance, or Virtual SAN traffic.
+
+5. Select `New standard switch` and click `Next`.
+
+6. Add physical network adapters to the new standard switch.
+
+   a. Under Assigned adapters, click `Add adapters`.
+
+   b. Select one or more physical network adapters from the list.
+
+   c. Click `OK`.
+
+7. If you create the new standard switch with a VMkernel adapter, enter connection settings for the adapter.
+
+   Option | Description
+   ------------ | -------------
+   VMkernel adapter | a. Enter a label that indicates the traffic type for the VMkernel adapter, for example `vMotion`. <br/> b. If you use the default TCP/IP stack, select from the available services. <br/> c. Configure IPv4 and IPv6 settings.
+
+8. On the Ready to Complete page, click `OK`.
 
 # vSphere Availability
 ## Creating and Using vSphere HA Clusters
@@ -228,8 +195,6 @@ You must meet the following cluster requirements before you use Fault Tolerance.
 
 #### Configure Networking for Host Machines
 On each host that you want to add to a vSphere HA cluster, you must configure two different networking switches (vMotion and FT logging) so that the host can support vSphere Fault Tolerance.
-
-To set up Fault Tolerance for a host, you must complete this procedure for each port group option (vMotion and FT logging) to ensure that sufficient bandwidth is available for Fault Tolerance logging. Select one option, finish this procedure, and repeat the procedure a second time, selecting the other port group option.
 
 1. In the vSphere Web Client, browse to the host.
 
