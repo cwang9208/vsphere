@@ -36,8 +36,20 @@ When you have access to the direct console, you can optionally configure a stati
 The vCenter Server Appliance installer contains executable files for GUI and CLI deployments, which you can use alternatively.
 - The GUI deployment is a two stage process. The first stage is a deployment wizard that deploys the OVA file of the appliance on the target ESXi host or vCenter Server instance. After the OVA deployment finishes, you are redirected to the second stage of the process that sets up and starts the services of the newly deployed appliance.
 
-### Deploy the vCenter Server Appliance with an Embedded Platform Services Controller by Using the GUI
-#### Stage 1 - Deploy the OVA File as a vCenter Server Appliance with an Embedded Platform Services Controller
+
+### Preparing for Deployment of the vCenter Server Appliance and Platform Services Controller Appliance
+
+#### Download and Mount the vCenter Server Appliance Installer
+
+1. From the VMware Web site, download the vCenter Server Appliance ISO image.
+
+2. Mount or extract the ISO image to the client machine from which you want to deploy, upgrade, migrate, or restore the appliance.
+
+   For Ubuntu 14.04, you can use Disk Image Mounter.
+
+### GUI Deployment of the vCenter Server Appliance and Platform Services Controller Appliance
+#### Deploy the vCenter Server Appliance with an Embedded Platform Services Controller by Using the GUI
+##### Stage 1 - Deploy the OVA File as a vCenter Server Appliance with an Embedded Platform Services Controller
 1. In the vCenter Server Appliance installer, navigate to the `vcsa-ui-installer` directory, go to the subdirectory for your operating system, and run the installer executable file.
    - For Linux OS, go to the `lin64` subdirectory, and run the `installer` file.
 2. On the Home page, click `Install` to start the deployment wizard.
@@ -66,7 +78,7 @@ The vCenter Server Appliance installer contains executable files for GUI and CLI
 13. On the Ready to complete stage 1 page, review the deployment settings for the Platform Services Controller appliance and click `Finish` to start the OVA deployment process.
 14. Wait for the OVA deployment to finish, and click `Continue` to proceed with stage 2 of the deployment process to set up and start the services of the newly deployed appliance.
 
-#### Stage 2 - Set up the Newly Deployed vCenter Server Appliance with an Embedded Platform Services Controller
+##### Stage 2 - Set up the Newly Deployed vCenter Server Appliance with an Embedded Platform Services Controller
 1. Review the introduction to stage 2 of the deployment process and click `Next`.
 
 2. Configure the time settings in the appliance. For vCenter Server High Availability (HA), enable SSH access.
@@ -224,3 +236,15 @@ After you create both a vMotion and Fault Tolerance logging virtual switch, you 
 5. Select a host on which to place the Secondary VM. Then click `Next`.
 
 6. Review your selections and then click `Finish`.
+
+# Troubleshooting
+## Install the Flash plug-in
+
+1. Activate the Canonical Partner repository
+
+
+   The Canonical Partner repository offers some proprietary applications that don't cost any money to use but are closed source. They include software like *Skype* and *Adobe Flash Plugin*. Software in this repository will appear in *Ubuntu Software* search results but won't be installable until this repository is enabled.
+
+   To enable the repository, open the Other Software tab in *Software & Updates*. If you see the Canonical Partners repository in the list, make sure it is checked then close the *Software & Updates* window.
+
+2. Install the adobe-flashplugin package.
