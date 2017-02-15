@@ -62,7 +62,7 @@ The set of powered on virtual machines is stored in a per-host "poweron" file. I
 
 The naming scheme for this file is as follows: `host-number-poweron`
 
-Tracking virtual machine power-on state is not the only thing the “poweron” file is used for. This file is also used by the slaves to inform the master that it is isolated from the management network: the top line of the file will either contain a 0 or a 1. A 0 \(zero\) means not-isolated and a 1 \(one\) means isolated. The master will inform vCenter about the isolation of the host.
+Tracking virtual machine power-on state is not the only thing the "poweron" file is used for. This file is also used by the slaves to inform the master that it is isolated from the management network: the top line of the file will either contain a 0 or a 1. A 0 \(zero\) means not-isolated and a 1 \(one\) means isolated. The master will inform vCenter about the isolation of the host.
 
 ## Heartbeating
 
@@ -70,13 +70,13 @@ Heartbeating is the mechanism used by HA to validate whether a host is alive. HA
 
 Network Heartbeating is used by HA to determine if an ESXi host is alive. Each slave will send a heartbeat to its master and the master sends a heartbeat to each of the slaves, this is a point-to-point communication. These heartbeats are sent by default every second.
 
-When a slave isn’t receiving any heartbeats from the master, it will try to determine whether it is Isolated.
+When a slave isn't receiving any heartbeats from the master, it will try to determine whether it is Isolated.
 
 ### Datastore Heartbeating
 
 Datastore heartbeating adds an extra level of resiliency and prevents unnecessary restart attempts from occurring as it allows vSphere HA to determine whether a host is isolated from the network or is completely unavailable. How does this work?
 
-Datastore heartbeating enables a master to more determine the state of a host that is not reachable via the management network. The new datastore heartbeat mechanism is used in case the master has lost network connectivity with the slaves. The datastore heartbeat mechanism is then used to validate whether a host has failed or is merely isolated/network partitioned. Isolation will be validated through the “poweron” file which, as mentioned earlier, will be updated by the host when it is isolated. Without the “poweron” file, there is no way for the master to validate isolation. Let that be clear! Based on the results of checks of both files, the master will determine the appropriate action to take. If the master determines that a host has failed \(no datastore heartbeats\), the master will restart the failed host’s virtual machines. If the master determines that the slave is Isolated or Partitioned, it will only take action when it is appropriate to take action. With that meaning that the master will only initiate restarts when virtual machines are down or powered down / shut down by a triggered isolation response.
+Datastore heartbeating enables a master to more determine the state of a host that is not reachable via the management network. The new datastore heartbeat mechanism is used in case the master has lost network connectivity with the slaves. The datastore heartbeat mechanism is then used to validate whether a host has failed or is merely isolated/network partitioned. Isolation will be validated through the "poweron" file which, as mentioned earlier, will be updated by the host when it is isolated. Without the "poweron" file, there is no way for the master to validate isolation. Let that be clear! Based on the results of checks of both files, the master will determine the appropriate action to take. If the master determines that a host has failed \(no datastore heartbeats\), the master will restart the failed host's virtual machines. If the master determines that the slave is Isolated or Partitioned, it will only take action when it is appropriate to take action. With that meaning that the master will only initiate restarts when virtual machines are down or powered down / shut down by a triggered isolation response.
 
 By default, HA selects 2 heartbeat datastores – it will select datastores that are available on all hosts, or as many as possible.
 
@@ -92,13 +92,13 @@ First, consider the administrator's perspective. Two hosts are considered partit
 
 ![](fig14.png "Isolated versus Partitioned")
 
-When the master stops receiving network heartbeats from a slave, it will check for host "liveness" for the next 15 seconds. Before the host is declared failed, the master will validate if it has actually failed or not by doing additional liveness checks. First, the master will validate if the host is still heartbeating to the datastore. Second, the master will ping the management IP address of the host. If both are negative, the host will be declared Failed. This doesn’t necessarily mean the host has PSOD’ed; it could be the network is unavailable, including the storage network, which would make this host Isolated from an administrator’s perspective but Failed from an HA perspective.
+When the master stops receiving network heartbeats from a slave, it will check for host "liveness" for the next 15 seconds. Before the host is declared failed, the master will validate if it has actually failed or not by doing additional liveness checks. First, the master will validate if the host is still heartbeating to the datastore. Second, the master will ping the management IP address of the host. If both are negative, the host will be declared Failed. This doesn't necessarily mean the host has PSOD'ed; it could be the network is unavailable, including the storage network, which would make this host Isolated from an administrator's perspective but Failed from an HA perspective.
 
 # Restarting Virtual Machines
 ## Isolation Response and Detection
 Today there are two isolation responses: "Power off", and "Shut down". In previous versions (pre vSphere 6.0) there was also an isolation response called "leave powered on", this has been renamed to "disabled" as "leave powered on" means that there is no response to an isolation event.
 
-The isolation response features answers the question, "what should a host do with the virtual machines it manages when it detects that it is isolated from the network?" Let’s discuss these three options more in-depth:
+The isolation response features answers the question, "what should a host do with the virtual machines it manages when it detects that it is isolated from the network?" Let's discuss these three options more in-depth:
 
 * Disabled (default) – When isolation occurs on the host, the state of the virtual machines remains unchanged.
 * Power off – When isolation occurs, all virtual machines are powered off. It is a hard stop, or to put it bluntly, the "virtual" power cable of the virtual machine will be pulled out!
@@ -115,7 +115,7 @@ HA triggers a master election process before it will declare a host is isolated.
 * T30s – Slave declares itself isolated
 * T60s – Slave "triggers" isolation response
 
-When the isolation response is triggered HA creates a "power-off" file for any virtual machine HA powers off whose home datastore is accessible. Next it powers off the virtual machine (or shuts down) and updates the host’s poweron file. The power-off file is used to record that HA powered off the virtual machine and so HA should restart it.
+When the isolation response is triggered HA creates a "power-off" file for any virtual machine HA powers off whose home datastore is accessible. Next it powers off the virtual machine (or shuts down) and updates the host's poweron file. The power-off file is used to record that HA powered off the virtual machine and so HA should restart it.
 
 ### Additional Checks
 
