@@ -237,6 +237,19 @@ After you create both a vMotion and Fault Tolerance logging virtual switch, you 
 
 6. Review your selections and then click `Finish`.
 
+# vSphere Monitoring and Performance
+## Monitoring Inventory Objects with Performance Charts
+### Overview Performance Charts
+#### Hosts
+##### Network Rate 
+The Network Rate chart displays network bandwidth on a host.
+
+The Network Data Transmitted/Received chart for hosts is located in the `Home` view of the Host `Performance` tab.
+
+Chart Label | Description
+------------ | -------------
+Data Transmit Rate | Rate at which data is transmitted across the top ten physical NIC instances on the host. This represents the bandwidth of the network.
+
 # Troubleshooting
 ## Install the Flash plug-in
 
