@@ -199,6 +199,15 @@ You are redirected to the vCenter Server Appliance Getting Started page.
 8. Click `OK`.
 
 ## Providing Fault Tolerance for Virtual Machines
+### Fault Tolerance Requirements, Limits, and Licensing
+#### Limits
+In a cluster configured to use Fault Tolerance, two limits are enforced independently.
+
+- `das.maxftvmsperhost`
+  - The maximum number of fault tolerant VMs allowed on a host in the cluster. Both Primary VMs and Secondary VMs count toward this limit. The default value is 4.
+- `das.maxftvcpusperhost`
+  - The maximum number of vCPUs aggregated across all fault tolerant VMs on a host. vCPUs from both Primary VMs and Secondary VMs count toward this limit. The default value is 8.
+
 ### Preparing Your Cluster and Hosts for Fault Tolerance
 #### Fault Tolerance Checklist
 You must meet the following cluster requirements before you use Fault Tolerance.
