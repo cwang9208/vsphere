@@ -1,0 +1,6 @@
+# Netperf
+## Using Netperf to measure request/response performance
+netperf was run with the TCP_RR configuration (single stream, no parallel streams) and the round-trip latency is reported here (it is the inverse of the round-trip transaction rate). TCP_RR is a pure latency benchmark: the sender transmits a 1-byte message and blocks waiting for a 1-byte response, the benchmark counts the number of serial transactions completed in a unit time, and there is no parallelization.
+```
+$netperf -H remotehost -t TCP_RR
+```
